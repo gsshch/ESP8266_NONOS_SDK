@@ -20,6 +20,7 @@ enum ERROR_INFO{
 bool ICACHE_FLASH_ATTR apds9960_initialize() {
 	unsigned char id = 0;
 	/* Initialize I2C */
+	i2c.i2c_master_gpio_init();
 	i2c.i2c_master_init();
 
 	/* Read ID register and check against known values for APDS-9960 */
@@ -845,13 +846,6 @@ uint8_t ICACHE_FLASH_ATTR wireReadDataByte(unsigned char reg) {
 	return (val);
 
 }
-
-typedef struct _api_apds9960 {
-	bool (*apds9960_initialize)(void);
-	bool (*processGestureData)(void);
-	int (*readGesture)(void);
-	bool (*isGestureAvailable)(void);
-} api_apds9960;
 
 api_apds9960 apds = {
 		apds9960_initialize,

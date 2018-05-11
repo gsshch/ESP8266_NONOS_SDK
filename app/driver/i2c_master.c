@@ -332,6 +332,7 @@ i2c_master_writeByte(uint8 wrdata)
 
 
 api_i2c i2c = {
+		i2c_master_gpio_init,
 		i2c_master_init,
 		i2c_master_start,
 		i2c_master_stop,

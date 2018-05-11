@@ -300,6 +300,12 @@ typedef struct gesture_data_type {
     int gesture_state_;
     int gesture_motion_;
 
-    extern api_apds9960 apds;
+typedef struct _api_apds9960 {
+	bool (*apds9960_initialize)(void);
+	bool (*processGestureData)(void);
+	int (*readGesture)(void);
+	bool (*isGestureAvailable)(void);
+} api_apds9960;
+extern api_apds9960 apds;
 
 #endif /* IOT_DEMO_USER_USER_SENSOR_APDS9960_H_ */

@@ -81,6 +81,7 @@ void i2c_master_send_ack(void);
 void i2c_master_send_nack(void);
 
 typedef struct _api_i2c {
+	void(*i2c_master_gpio_init)(void);
 	void (*i2c_master_init)(void);
 	void (*i2c_master_start)(void);
 	void (*i2c_master_stop)(void);
