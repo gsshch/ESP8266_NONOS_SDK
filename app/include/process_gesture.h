@@ -9,4 +9,6 @@
 #define APP_USER_PROCESS_GESTURE_H_
 
 
+void  apds_task_init();
+
 #endif /* APP_USER_PROCESS_GESTURE_H_ */

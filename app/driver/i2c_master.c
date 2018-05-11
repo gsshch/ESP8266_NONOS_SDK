@@ -83,6 +83,7 @@ i2c_master_getDC(void)
 void ICACHE_FLASH_ATTR
 i2c_master_init(void)
 {
+	os_printf("i2c master init\n");
     uint8 i;
 
     i2c_master_setDC(1, 0);
@@ -306,6 +307,7 @@ i2c_master_readByte(void)
 void ICACHE_FLASH_ATTR
 i2c_master_writeByte(uint8 wrdata)
 {
+//	os_printf("i2c master write byte=%d\n", wrdata);
     uint8 dat;
     sint8 i;
 

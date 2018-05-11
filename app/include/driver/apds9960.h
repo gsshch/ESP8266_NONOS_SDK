@@ -8,7 +8,6 @@
 #ifndef IOT_DEMO_USER_USER_SENSOR_APDS9960_H_
 #define IOT_DEMO_USER_USER_SENSOR_APDS9960_H_
 
-
 #include "c_types.h"
 
 /* Debug */
@@ -179,126 +178,115 @@
 #define abs(x) ((x) > 0 ? (x) : -(x))
 
 // The flag to indicate whether an I2C error has occured.
-unsigned char b_i2c_error_flag = 0;
+//uint8 b_i2c_error_flag = 0;
 /* Direction definitions */
 enum {
-  DIR_NONE,
-  DIR_LEFT,
-  DIR_RIGHT,
-  DIR_UP,
-  DIR_DOWN,
-  DIR_NEAR,
-  DIR_FAR,
-  DIR_ALL
+	DIR_NONE, DIR_LEFT, DIR_RIGHT, DIR_UP, DIR_DOWN, DIR_NEAR, DIR_FAR, DIR_ALL
 };
 
 /* State definitions */
 enum {
-  NA_STATE,
-  NEAR_STATE,
-  FAR_STATE,
-  ALL_STATE
+	NA_STATE, NEAR_STATE, FAR_STATE, ALL_STATE
 };
 
 /* Container for gesture data */
 typedef struct gesture_data_type {
-    uint8_t u_data[16];
-    uint8_t d_data[16];
-    uint8_t l_data[16];
-    uint8_t r_data[16];
-    uint8_t index;
-    uint8_t total_gestures;
-    uint8_t in_threshold;
-    uint8_t out_threshold;
+	uint8_t u_data[16];
+	uint8_t d_data[16];
+	uint8_t l_data[16];
+	uint8_t r_data[16];
+	uint8_t index;
+	uint8_t total_gestures;
+	uint8_t in_threshold;
+	uint8_t out_threshold;
 } gesture_data_type;
 
+bool apds9960_initialize();
+uint8_t getMode();
+bool setMode(uint8_t mode, uint8_t enable);
 
-    bool apds9960_initialize();
-    uint8_t getMode();
-    bool setMode(uint8_t mode, uint8_t enable);
+/* Turn the APDS-9960 on and off */
+bool enablePower();
+bool disablePower();
 
-    /* Turn the APDS-9960 on and off */
-    bool enablePower();
-    bool disablePower();
-
-    /* Enable or disable specific sensors */
-    bool enableGestureSensor(bool interrupts);
+/* Enable or disable specific sensors */
+bool enableGestureSensor(bool interrupts);
 //    bool disableGestureSensor();
 
-    /* LED drive strength control */
-    uint8_t getLEDDrive();
-    bool setLEDDrive(uint8_t drive);
-    uint8_t getGestureLEDDrive();
-    bool setGestureLEDDrive(uint8_t drive);
+/* LED drive strength control */
+uint8_t getLEDDrive();
+bool setLEDDrive(uint8_t drive);
+uint8_t getGestureLEDDrive();
+bool setGestureLEDDrive(uint8_t drive);
 
-    /* Gain control */
-    uint8_t getAmbientLightGain();
-    bool setAmbientLightGain(uint8_t gain);
-    uint8_t getProximityGain();
-    bool setProximityGain(uint8_t gain);
-    uint8_t getGestureGain();
-    bool setGestureGain(uint8_t gain);
+/* Gain control */
+uint8_t getAmbientLightGain();
+bool setAmbientLightGain(uint8_t gain);
+uint8_t getProximityGain();
+bool setProximityGain(uint8_t gain);
+uint8_t getGestureGain();
+bool setGestureGain(uint8_t gain);
 
-    /* Get and set light interrupt thresholds */
+/* Get and set light interrupt thresholds */
 //   bool getLightIntLowThreshold(uint16_t &threshold);
-    bool setLightIntLowThreshold(uint16_t threshold);
+bool setLightIntLowThreshold(uint16_t threshold);
 //   bool getLightIntHighThreshold(uint16_t &threshold);
-    bool setLightIntHighThreshold(uint16_t threshold);
+bool setLightIntHighThreshold(uint16_t threshold);
 
-    /* Get and set interrupt enables */
-    uint8_t getGestureIntEnable();
-    bool setGestureIntEnable(uint8_t enable);
+/* Get and set interrupt enables */
+uint8_t getGestureIntEnable();
+bool setGestureIntEnable(uint8_t enable);
 
-    /* Gesture methods */
-    bool isGestureAvailable();
-    int readGesture();
+/* Gesture methods */
+bool isGestureAvailable();
+int readGesture();
 
-    /* Gesture processing */
-    void resetGestureParameters();
-    bool processGestureData();
-    bool decodeGesture();
+/* Gesture processing */
+void resetGestureParameters();
+bool processGestureData();
+bool decodeGesture();
 
-   /* Proximity Interrupt Threshold */
+/* Proximity Interrupt Threshold */
 //    uint8_t getProxIntLowThresh();
-    bool setProxIntLowThresh(uint8_t threshold);
+bool setProxIntLowThresh(uint8_t threshold);
 //    uint8_t getProxIntHighThresh();
-    bool setProxIntHighThresh(uint8_t threshold);
+bool setProxIntHighThresh(uint8_t threshold);
 
-    /* LED Boost Control */
-    uint8_t getLEDBoost();
-    bool setLEDBoost(uint8_t boost);
+/* LED Boost Control */
+uint8_t getLEDBoost();
+bool setLEDBoost(uint8_t boost);
 
-    /* Gesture threshold control */
-    uint8_t getGestureEnterThresh();
-    bool setGestureEnterThresh(uint8_t threshold);
-    uint8_t getGestureExitThresh();
-    bool setGestureExitThresh(uint8_t threshold);
+/* Gesture threshold control */
+uint8_t getGestureEnterThresh();
+bool setGestureEnterThresh(uint8_t threshold);
+uint8_t getGestureExitThresh();
+bool setGestureExitThresh(uint8_t threshold);
 
-    /* Gesture LED, gain, and time control */
-    uint8_t getGestureWaitTime();
-    bool setGestureWaitTime(uint8_t time);
+/* Gesture LED, gain, and time control */
+uint8_t getGestureWaitTime();
+bool setGestureWaitTime(uint8_t time);
 
-    /* Gesture mode */
-    uint8_t getGestureMode();
-    bool setGestureMode(uint8_t mode);
+/* Gesture mode */
+uint8_t getGestureMode();
+bool setGestureMode(uint8_t mode);
 
-    /* Raw I2C Commands */
-    int wireWriteByte(unsigned char);
-    int wireWriteDataByte(unsigned char , unsigned char );
-    unsigned char wireReadDataByte(unsigned char);
-    int wireReadDataBlock(uint8_t reg, uint8_t *val, unsigned int len);
-    //unsigned char b_i2c_check_error_flag(void);
+/* Raw I2C Commands */
+int wireWriteByte(unsigned char);
+int wireWriteDataByte(unsigned char, unsigned char);
+unsigned char wireReadDataByte(unsigned char);
+int wireReadDataBlock(uint8_t reg, uint8_t *val, unsigned int len);
+//unsigned char b_i2c_check_error_flag(void);
 
-    /* Members */
-    gesture_data_type gesture_data_;
-    int gesture_ud_delta_;
-    int gesture_lr_delta_;
-    int gesture_ud_count_;
-    int gesture_lr_count_;
-    int gesture_near_count_;
-    int gesture_far_count_;
-    int gesture_state_;
-    int gesture_motion_;
+/* Members */
+gesture_data_type gesture_data_;
+int gesture_ud_delta_;
+int gesture_lr_delta_;
+int gesture_ud_count_;
+int gesture_lr_count_;
+int gesture_near_count_;
+int gesture_far_count_;
+int gesture_state_;
+int gesture_motion_;
 
 typedef struct _api_apds9960 {
 	bool (*apds9960_initialize)(void);

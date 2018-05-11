@@ -18,6 +18,7 @@ enum ERROR_INFO{
 	APDS9960_ID_ERROR,
 };
 bool ICACHE_FLASH_ATTR apds9960_initialize() {
+	os_printf("apds9960 init\n");
 	unsigned char id = 0;
 	/* Initialize I2C */
 	i2c.i2c_master_gpio_init();
@@ -539,8 +540,8 @@ int ICACHE_FLASH_ATTR readGesture() {
 	while (1) {
 
 		/* Wait some time to collect next batch of FIFO data */
-		__delay_ms(FIFO_PAUSE_TIME);
-
+//		__delay_ms(FIFO_PAUSE_TIME);
+		os_delay_us(30000);
 		/* Get the contents of the STATUS register. Is data still valid? */
 		gstatus = wireReadDataByte(APDS9960_GSTATUS);
 
@@ -596,7 +597,8 @@ int ICACHE_FLASH_ATTR readGesture() {
 		} else {
 
 			/* Determine best guessed gesture and clean up */
-			__delay_ms(FIFO_PAUSE_TIME);
+//			__delay_ms(FIFO_PAUSE_TIME);
+			os_delay_us(30000);
 			decodeGesture();
 			motion = gesture_motion_;
 
@@ -831,6 +833,7 @@ int ICACHE_FLASH_ATTR wireWriteDataByte(unsigned char reg, unsigned char val) {
 
 /*Reads a single byte from the I2C device and specified register*/
 uint8_t ICACHE_FLASH_ATTR wireReadDataByte(unsigned char reg) {
+//	os_printf("wire read data byte=%d\n",reg);
 	/* Indicate which register we want to read from */
 	unsigned char val;
 

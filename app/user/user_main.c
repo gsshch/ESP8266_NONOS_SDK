@@ -28,6 +28,8 @@
 
 #include "user_interface.h"
 
+#include "process_gesture.h"
+
 uint32 priv_param_start_sec;
 
 /******************************************************************************
@@ -111,6 +113,6 @@ void ICACHE_FLASH_ATTR
 user_init(void)
 {
     os_printf("SDK version:%s\n", system_get_sdk_version());
-
+    apds_task_init();
 }
 

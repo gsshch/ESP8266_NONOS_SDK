@@ -14,4 +14,4 @@
  ../../include/c_types.h ../../include/user_interface.h \
  ../../include/ip_addr.h ../../include/queue.h \
  ../../include/../app/include/user_config.h ../../include/spi_flash.h \
- ../../include/gpio.h
+ ../../include/gpio.h ../include/process_gesture.h
