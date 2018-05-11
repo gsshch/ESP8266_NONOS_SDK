@@ -13,11 +13,14 @@
 #include "osapi.h"
 
 /*Configures I2C communications and initializes registers to defaults*/
-bool ICACHE_FLASH_ATTR initialize() {
 
+enum ERROR_INFO{
+	APDS9960_ID_ERROR,
+};
+bool ICACHE_FLASH_ATTR apds9960_initialize() {
 	unsigned char id = 0;
 	/* Initialize I2C */
-	InitI2C();
+	i2c.i2c_master_init();
 
 	/* Read ID register and check against known values for APDS-9960 */
 	id = wireReadDataByte(APDS9960_ID);
@@ -795,20 +798,20 @@ bool ICACHE_FLASH_ATTR decodeGesture() {
 int ICACHE_FLASH_ATTR wireReadDataBlock(uint8_t reg, uint8_t *val, unsigned int len) {
 	unsigned char j = 0;
 
-	i2c_master_start();
-	i2c_master_writeByte((APDS9960_I2C_ADDR << 1) | 0x00); // Slave address + Write command
+	i2c.i2c_master_start();
+	i2c.i2c_master_writeByte((APDS9960_I2C_ADDR << 1) | 0x00); // Slave address + Write command
 
-	i2c_master_writeByte(reg); // write the location
+	i2c.i2c_master_writeByte(reg); // write the location
 
 	for (j = 0; j < len; j++) {
 
 //		I2C_ReStart();
-		i2c_master_writeByte((APDS9960_I2C_ADDR << 1) | 0x01); //Slave address+ read command
-		val[j] = i2c_master_readByte(); // Store the Receive value in a variable
-		i2c_master_send_nack();
+		i2c.i2c_master_writeByte((APDS9960_I2C_ADDR << 1) | 0x01); //Slave address+ read command
+		val[j] = i2c.i2c_master_readByte(); // Store the Receive value in a variable
+		i2c.i2c_master_send_nack();
 	}
 
-	i2c_master_stop();
+	i2c.i2c_master_stop();
 
 	return (int) j;
 }
@@ -816,11 +819,11 @@ int ICACHE_FLASH_ATTR wireReadDataBlock(uint8_t reg, uint8_t *val, unsigned int 
 /*Writes a single byte to the I2C device and specified register*/
 int ICACHE_FLASH_ATTR wireWriteDataByte(unsigned char reg, unsigned char val) {
 
-	i2c_master_start();
-	i2c_master_writeByte((APDS9960_I2C_ADDR << 1) | 0x00); // Slave address + Write command
-	i2c_master_writeByte(reg); // write the location
-	i2c_master_writeByte(val); // Write the Data
-	i2c_master_stop();
+	i2c.i2c_master_start();
+	i2c.i2c_master_writeByte((APDS9960_I2C_ADDR << 1) | 0x00); // Slave address + Write command
+	i2c.i2c_master_writeByte(reg); // write the location
+	i2c.i2c_master_writeByte(val); // Write the Data
+	i2c.i2c_master_stop();
 
 	return 1;
 }
@@ -830,15 +833,30 @@ uint8_t ICACHE_FLASH_ATTR wireReadDataByte(unsigned char reg) {
 	/* Indicate which register we want to read from */
 	unsigned char val;
 
-	i2c_master_start();
-	i2c_master_writeByte((APDS9960_I2C_ADDR << 1) | 0x00); // Slave address + Write command
-	i2c_master_writeByte(reg); // write location
+	i2c.i2c_master_start();
+	i2c.i2c_master_writeByte((APDS9960_I2C_ADDR << 1) | 0x00); // Slave address + Write command
+	i2c.i2c_master_writeByte(reg); // write location
 //	I2C_ReStart();
-	i2c_master_writeByte((APDS9960_I2C_ADDR << 1) | 0x01); //Slave address+ read command
-	val = i2c_master_readByte();   // Store the Receive value in a variable
-	i2c_master_send_nack();
-	i2c_master_stop();
+	i2c.i2c_master_writeByte((APDS9960_I2C_ADDR << 1) | 0x01); //Slave address+ read command
+	val = i2c.i2c_master_readByte();   // Store the Receive value in a variable
+	i2c.i2c_master_send_nack();
+	i2c.i2c_master_stop();
 
 	return (val);
 
 }
+
+typedef struct _api_apds9960 {
+	bool (*apds9960_initialize)(void);
+	bool (*processGestureData)(void);
+	int (*readGesture)(void);
+	bool (*isGestureAvailable)(void);
+} api_apds9960;
+
+api_apds9960 apds = {
+		apds9960_initialize,
+		processGestureData,
+		readGesture,
+		isGestureAvailable
+};
+

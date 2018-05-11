@@ -329,3 +329,13 @@ i2c_master_writeByte(uint8 wrdata)
         i2c_master_wait(5);
     }
 }
+
+
+api_i2c i2c = {
+		i2c_master_init,
+		i2c_master_start,
+		i2c_master_stop,
+		i2c_master_writeByte,
+		i2c_master_readByte,
+		i2c_master_send_nack
+};

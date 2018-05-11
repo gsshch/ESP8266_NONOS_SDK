@@ -213,7 +213,7 @@ typedef struct gesture_data_type {
 } gesture_data_type;
 
 
-    bool initialize();
+    bool apds9960_initialize();
     uint8_t getMode();
     bool setMode(uint8_t mode, uint8_t enable);
 
@@ -300,6 +300,6 @@ typedef struct gesture_data_type {
     int gesture_state_;
     int gesture_motion_;
 
-
+    extern api_apds9960 apds;
 
 #endif /* IOT_DEMO_USER_USER_SENSOR_APDS9960_H_ */

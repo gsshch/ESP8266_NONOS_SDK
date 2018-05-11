@@ -80,4 +80,15 @@ bool i2c_master_checkAck(void);
 void i2c_master_send_ack(void);
 void i2c_master_send_nack(void);
 
+typedef struct _api_i2c {
+	void (*i2c_master_init)(void);
+	void (*i2c_master_start)(void);
+	void (*i2c_master_stop)(void);
+	void (*i2c_master_writeByte)(uint8);
+	uint8 (*i2c_master_readByte)(void);
+	void (*i2c_master_send_nack)(void);
+} api_i2c;
+
+extern api_i2c i2c;
+
 #endif
