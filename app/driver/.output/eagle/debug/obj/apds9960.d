@@ -1,6 +1,6 @@
-.output/eagle/debug/obj/user_sensor_apds9960.o .output/eagle/debug/obj/user_sensor_apds9960.d : user_sensor_apds9960.c \
- ../../app/include/user_sensor_apds9960.h ../../include/c_types.h \
- ../../app/include/driver/i2c_master.h ../../include/mem.h \
+.output/eagle/debug/obj/apds9960.o .output/eagle/debug/obj/apds9960.d : apds9960.c ../include/driver/apds9960.h \
+ ../../include/c_types.h ../../app/include/driver/i2c_master.h \
+ ../../include/mem.h \
  /opt/xtensa-lx106-elf/lib/gcc/xtensa-lx106-elf/4.8.2/include/stddef.h \
  ../../include/osapi.h \
  /opt/xtensa-lx106-elf/lib/gcc/xtensa-lx106-elf/4.8.2/include/string.h \
