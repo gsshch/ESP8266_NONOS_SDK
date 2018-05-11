@@ -5,7 +5,7 @@
  *      Author: guo
  */
 
-#include "../../app/include/user_sensor_apds9960.h"
+#include "../include/driver/apds9960.h"
 
 #include "../../app/include/driver/i2c_master.h"
 #include "c_types.h"
@@ -13,7 +13,7 @@
 #include "osapi.h"
 
 /*Configures I2C communications and initializes registers to defaults*/
-bool initialize() {
+bool ICACHE_FLASH_ATTR initialize() {
 
 	unsigned char id = 0;
 	/* Initialize I2C */
@@ -109,7 +109,7 @@ bool initialize() {
 }
 
 /*Enables or disables a feature in the APDS-9960*/
-bool setMode(uint8_t mode, uint8_t enable) {
+bool ICACHE_FLASH_ATTR setMode(uint8_t mode, uint8_t enable) {
 	uint8_t reg_val;
 
 	/* Read current ENABLE register */
@@ -143,7 +143,7 @@ bool setMode(uint8_t mode, uint8_t enable) {
 }
 
 /*Reads and returns the contents of the ENABLE register*/
-uint8_t getMode() {
+uint8_t ICACHE_FLASH_ATTR getMode() {
 	uint8_t enable_value;
 
 	/* Read current ENABLE register */
@@ -153,7 +153,7 @@ uint8_t getMode() {
 }
 
 /*Sets the LED drive strength for proximity and ambient light sensor (ALS)*/
-bool setLEDDrive(uint8_t drive) {
+bool ICACHE_FLASH_ATTR setLEDDrive(uint8_t drive) {
 	uint8_t val;
 
 	/* Read value from CONTROL register */
@@ -174,7 +174,7 @@ bool setLEDDrive(uint8_t drive) {
 }
 
 /*Sets the receiver gain for proximity detection*/
-bool setProximityGain(uint8_t drive) {
+bool ICACHE_FLASH_ATTR setProximityGain(uint8_t drive) {
 	uint8_t val;
 
 	/* Read value from CONTROL register */
@@ -194,7 +194,7 @@ bool setProximityGain(uint8_t drive) {
 }
 
 /*Sets the receiver gain for the ambient light sensor (ALS)*/
-bool setAmbientLightGain(uint8_t drive) {
+bool ICACHE_FLASH_ATTR setAmbientLightGain(uint8_t drive) {
 	uint8_t val;
 
 	/* Read value from CONTROL register */
@@ -214,7 +214,7 @@ bool setAmbientLightGain(uint8_t drive) {
 }
 
 /*Sets the lower threshold for proximity detection*/
-bool setProxIntLowThresh(uint8_t threshold) {
+bool ICACHE_FLASH_ATTR setProxIntLowThresh(uint8_t threshold) {
 	if (!wireWriteDataByte(APDS9960_PILT, threshold)) {
 		return false;
 	}
@@ -223,7 +223,7 @@ bool setProxIntLowThresh(uint8_t threshold) {
 }
 
 /*Sets the high threshold for proximity detection*/
-bool setProxIntHighThresh(uint8_t threshold) {
+bool ICACHE_FLASH_ATTR setProxIntHighThresh(uint8_t threshold) {
 	if (!wireWriteDataByte(APDS9960_PIHT, threshold)) {
 		return false;
 	}
@@ -232,7 +232,7 @@ bool setProxIntHighThresh(uint8_t threshold) {
 }
 
 /*Sets the low threshold for ambient light interrupts*/
-bool setLightIntLowThreshold(uint16_t threshold) {
+bool ICACHE_FLASH_ATTR setLightIntLowThreshold(uint16_t threshold) {
 	uint8_t val_low;
 	uint8_t val_high;
 
@@ -254,7 +254,7 @@ bool setLightIntLowThreshold(uint16_t threshold) {
 }
 
 /*Sets the high threshold for ambient light interrupts*/
-bool setLightIntHighThreshold(uint16_t threshold) {
+bool ICACHE_FLASH_ATTR setLightIntHighThreshold(uint16_t threshold) {
 	uint8_t val_low;
 	uint8_t val_high;
 
@@ -276,7 +276,7 @@ bool setLightIntHighThreshold(uint16_t threshold) {
 }
 
 /*Sets the entry proximity threshold for gesture sensing*/
-bool setGestureEnterThresh(uint8_t threshold) {
+bool ICACHE_FLASH_ATTR setGestureEnterThresh(uint8_t threshold) {
 	if (!wireWriteDataByte(APDS9960_GPENTH, threshold)) {
 		return false;
 	}
@@ -285,7 +285,7 @@ bool setGestureEnterThresh(uint8_t threshold) {
 }
 
 /*Sets the exit proximity threshold for gesture sensing*/
-bool setGestureExitThresh(uint8_t threshold) {
+bool ICACHE_FLASH_ATTR setGestureExitThresh(uint8_t threshold) {
 	if (!wireWriteDataByte(APDS9960_GEXTH, threshold)) {
 		return false;
 	}
@@ -294,7 +294,7 @@ bool setGestureExitThresh(uint8_t threshold) {
 }
 
 /*Sets the gain of the photodiode during gesture mode*/
-bool setGestureGain(uint8_t gain) {
+bool ICACHE_FLASH_ATTR setGestureGain(uint8_t gain) {
 	uint8_t val;
 	/* Read value from GCONF2 register */
 	val = wireReadDataByte(APDS9960_GCONF2);
@@ -314,7 +314,7 @@ bool setGestureGain(uint8_t gain) {
 }
 
 /*Sets the LED drive current during gesture mode*/
-bool setGestureLEDDrive(uint8_t drive) {
+bool ICACHE_FLASH_ATTR setGestureLEDDrive(uint8_t drive) {
 	uint8_t val;
 
 	/* Read value from GCONF2 register */
@@ -335,7 +335,7 @@ bool setGestureLEDDrive(uint8_t drive) {
 }
 
 /*Sets the time in low power mode between gesture detections*/
-bool setGestureWaitTime(uint8_t time) {
+bool ICACHE_FLASH_ATTR setGestureWaitTime(uint8_t time) {
 	uint8_t val;
 
 	/* Read value from GCONF2 register */
@@ -355,7 +355,7 @@ bool setGestureWaitTime(uint8_t time) {
 }
 
 /* Turns gesture-related interrupts on or off*/
-bool setGestureIntEnable(uint8_t enable) {
+bool ICACHE_FLASH_ATTR setGestureIntEnable(uint8_t enable) {
 	uint8_t val;
 
 	/* Read value from GCONF4 register */
@@ -376,7 +376,7 @@ bool setGestureIntEnable(uint8_t enable) {
 }
 
 /*Starts the gesture recognition engine on the APDS-9960*/
-bool enableGestureSensor(bool interrupts) {
+bool ICACHE_FLASH_ATTR enableGestureSensor(bool interrupts) {
 
 	/* Enable gesture mode
 	 Set ENABLE to 0 (power off)
@@ -423,7 +423,7 @@ bool enableGestureSensor(bool interrupts) {
 }
 
 /*Resets all the parameters in the gesture data member*/
-void resetGestureParameters() {
+void ICACHE_FLASH_ATTR resetGestureParameters() {
 
 	gesture_data_.index = 0;
 	gesture_data_.total_gestures = 0;
@@ -449,7 +449,7 @@ void resetGestureParameters() {
  *   2        200%
  *   3        300%
  */
-bool setLEDBoost(uint8_t boost) {
+bool ICACHE_FLASH_ATTR setLEDBoost(uint8_t boost) {
 	uint8_t val;
 
 	/* Read value from CONFIG2 register */
@@ -470,7 +470,7 @@ bool setLEDBoost(uint8_t boost) {
 }
 
 /*Tells the state machine to either enter or exit gesture state machine*/
-bool setGestureMode(uint8_t mode) {
+bool ICACHE_FLASH_ATTR setGestureMode(uint8_t mode) {
 	uint8_t val;
 
 	/* Read value from GCONF4 register */
@@ -490,7 +490,7 @@ bool setGestureMode(uint8_t mode) {
 }
 
 /*Turn the APDS-9960 on*/
-bool enablePower() {
+bool ICACHE_FLASH_ATTR enablePower() {
 	if (!setMode(POWER, 1)) {
 		return false;
 	}
@@ -499,7 +499,7 @@ bool enablePower() {
 }
 
 /*Determines if there is a gesture available for reading*/
-bool isGestureAvailable() {
+bool ICACHE_FLASH_ATTR isGestureAvailable() {
 	uint8_t val;
 
 	/* Read value from GSTATUS register */
@@ -517,7 +517,7 @@ bool isGestureAvailable() {
 }
 
 /*Processes a gesture event and returns best guessed gesture*/
-int readGesture() {
+int ICACHE_FLASH_ATTR readGesture() {
 	uint8_t fifo_level = 0;
 	int bytes_read = 0;
 	uint8_t fifo_data[64];
@@ -604,7 +604,7 @@ int readGesture() {
 }
 
 /*Processes the raw gesture data to determine swipe direction*/
-bool processGestureData() {
+bool ICACHE_FLASH_ATTR processGestureData() {
 	uint8_t u_first = 0;
 	uint8_t d_first = 0;
 	uint8_t l_first = 0;
@@ -741,7 +741,7 @@ bool processGestureData() {
 }
 
 /*Determines swipe direction or near/far state*/
-bool decodeGesture() {
+bool ICACHE_FLASH_ATTR decodeGesture() {
 	/* Return if near or far event is detected */
 	if (gesture_state_ == NEAR_STATE) {
 		gesture_motion_ = DIR_NEAR;
@@ -792,7 +792,7 @@ bool decodeGesture() {
 }
 
 /*Reads a block (array) of bytes from the I2C device and register*/
-int wireReadDataBlock(uint8_t reg, uint8_t *val, unsigned int len) {
+int ICACHE_FLASH_ATTR wireReadDataBlock(uint8_t reg, uint8_t *val, unsigned int len) {
 	unsigned char j = 0;
 
 	i2c_master_start();
@@ -814,7 +814,7 @@ int wireReadDataBlock(uint8_t reg, uint8_t *val, unsigned int len) {
 }
 
 /*Writes a single byte to the I2C device and specified register*/
-int wireWriteDataByte(unsigned char reg, unsigned char val) {
+int ICACHE_FLASH_ATTR wireWriteDataByte(unsigned char reg, unsigned char val) {
 
 	i2c_master_start();
 	i2c_master_writeByte((APDS9960_I2C_ADDR << 1) | 0x00); // Slave address + Write command
@@ -826,7 +826,7 @@ int wireWriteDataByte(unsigned char reg, unsigned char val) {
 }
 
 /*Reads a single byte from the I2C device and specified register*/
-unsigned char wireReadDataByte(unsigned char reg) {
+uint8_t ICACHE_FLASH_ATTR wireReadDataByte(unsigned char reg) {
 	/* Indicate which register we want to read from */
 	unsigned char val;
 
