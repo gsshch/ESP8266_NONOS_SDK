@@ -28,6 +28,7 @@
 #include <string.h>
 #include "os_type.h"
 #include "user_config.h"
+#include "c_types.h"
 
 void ets_bzero(void *s, size_t n);
 void ets_delay_us(uint32_t us);

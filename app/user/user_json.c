@@ -22,12 +22,13 @@
  *
  */
 
+#include "../../app/include/user_json.h"
+
 #include "ets_sys.h"
 #include "osapi.h"
 #include "os_type.h"
 #include "mem.h"
 
-#include "user_json.h"
 
 LOCAL char *json_buf;
 LOCAL int pos;

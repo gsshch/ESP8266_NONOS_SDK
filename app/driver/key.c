@@ -22,14 +22,16 @@
  *
  */
 
+#include "../../app/include/driver/key.h"
+
 #include "ets_sys.h"
 #include "os_type.h"
 #include "osapi.h"
 #include "mem.h"
 #include "gpio.h"
 #include "user_interface.h"
+#include "c_types.h"
 
-#include "driver/key.h"
 
 LOCAL void key_intr_handler(void *arg);
 

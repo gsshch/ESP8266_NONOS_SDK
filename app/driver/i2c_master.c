@@ -22,11 +22,12 @@
  *
  */
 
+#include "../../app/include/driver/i2c_master.h"
+
 #include "ets_sys.h"
 #include "osapi.h"
 #include "gpio.h"
 
-#include "driver/i2c_master.h"
 
 LOCAL uint8 m_nLastSDA;
 LOCAL uint8 m_nLastSCL;
